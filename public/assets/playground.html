@@ -39,16 +39,18 @@
     <div class="container main-container">
         <div class="row">
             <div id="speechToCode" class="col-6">
-                <textarea id="algoTextarea" rows="10" cols="60"
+                <div class="form-group">
+                    <label for="algoTextarea">Provide Algorithm</label>
+                    <textarea class="form-control" id="algoTextarea" rows="22"
                     placeholder="Speak or click to write the algo"></textarea>
-                <br />
-                <button id="newAlgoBtn">New Algo</button>
-                <button id="newLineBtn">New line</button>
-                <button id="speechSend">Convert to code</button>
+                </div>
+                <button id="newAlgoBtn" class="btn btn-dark">New Algo</button>
+                <button id="newLineBtn" class="btn btn-dark">New line</button>
+                <button id="speechSend" class="btn btn-primary">Convert to code</button>
             </div>
             <div class="col-6">
                 <label for="language">Language: </label>
-                <select name="language" id="language-select">
+                <select name="language" class="form-select" aria-label="Default select example" id="language-select">
                     <option value="python" selected>Python</option>
                     <option value="javascript">Javascript</option>
                     <!-- <option value="cpp">C++</option> -->
@@ -57,19 +59,22 @@
                 <div class="editor-container">
                     <div id="container" style="width:800px;height:540px;border:1px solid grey"></div>
 
-                    <div class="output-container">
+                    <div class="output-container" id="output-hide-show">
                         <h4>Output</h4>
                         <div id="output-area"></div>
                     </div>
 
                     <div class="editor-bottom-bar">
                         <div class="convert-lang-btn">
-                            <button id="algo-to-code">Write Code</button>
+                            <button id="algo-to-code" class="btn btn-dark">Write Code</button>
 
-                            <button id="code-to-code">Convert Code</button>
+                            <button id="code-to-code" class="btn btn-dark">Convert Code</button>
                         </div>
-
-                        <button class="btn btn-primary" id="btn-run">Run</button>
+                        <div>
+                            <button class="btn btn-info" id="btn-output">Output box</button>
+                            <button class="btn btn-primary" id="btn-run">Run</button>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -81,6 +86,7 @@
     <script>
         require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.22.3/min/vs' } });
         let editor;
+        var isHide = false
 
         require(['vs/editor/editor.main'], function () {
             editor = monaco.editor.create(document.getElementById('container'), {
@@ -119,6 +125,8 @@
 
         const languageBtn = document.getElementById('btn-run')
         languageBtn.addEventListener('click', async (event) => {
+            $("#output-hide-show").show();
+            isHide = false
             languageBtn.disabled = true
             const data = {
                 language: languageSelect.value,
@@ -173,6 +181,19 @@
             }).finally(() => {
                 WriteCodeBtn.disabled = false
             })
+        })
+
+        const OutputBoxBtn = document.getElementById("btn-output")
+        
+        OutputBoxBtn.addEventListener("click", () => {
+            if(!isHide){
+                $("#output-hide-show").hide();
+                isHide = true
+            }else{
+                $("#output-hide-show").show();
+                isHide = false
+            }
+            
         })
 
         const ConvertCodeBtn = document.getElementById('code-to-code')

@@ -85,9 +85,11 @@ p {
 }
 
 .output-container {
-  margin-bottom: 60px;
+  margin-bottom: 45px;
   overflow-y: scroll;
   padding-left: 20px;
+  scrollbar-color: auto;
+  background-color: lightgreen;
 }
 
 .section-heading h2 {
