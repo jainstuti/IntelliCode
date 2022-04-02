@@ -42,15 +42,15 @@
             <br/>
             <button id="newAlgoBtn">New Algo</button>
             <button id="newLineBtn">New line</button>
-            <button>Convert to code</button>
+            <button id="speechSend">Convert to code</button>
           </div>
           <div class="col-6">
             <label for="language">Language: </label>
-    <select name="language" id="language-select">
-        <option value="python" selected>Python</option>
-        <option value="javascript">Javascript</option>
-        <!-- <option value="cpp">C++</option> -->
-    </select>
+                <select name="language" id="language-select">
+                    <option value="python" selected>Python</option>
+                    <option value="javascript">Javascript</option>
+                    <!-- <option value="cpp">C++</option> -->
+                </select>
 
     <div class="editor-container">
         <div id="container" style="width:800px;height:580px;border:1px solid grey"></div>
@@ -225,6 +225,39 @@
             })
         })
 
+
+        const SpeechSendButton = document.getElementById('speechSend')
+        SpeechSendButton.addEventListener('click', async (event) => {
+            let algoTextArea=document.getElementById('algoTextarea');
+            console.log("TExtArea:", algoTextArea.value)
+            WriteCodeBtn.disabled = true
+            const data = {
+                language: languageSelect.value,
+                code: algoTextArea.value
+            }
+
+            console.log(data)
+            const response = await fetch(`${BASE_URL}/code/write`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+
+            response.json().then(data => {
+                var selection = editor.getSelection();
+                var id = { major: 1, minor: 1 };             
+                var text = data.choices[0].text;
+                var op = {identifier: id, range: selection, text: text, forceMoveMarkers: true};
+                editor.executeEdits("my-source", [op]);
+            }).catch(err => {
+                console.log(err)
+            }).finally(() => {
+                WriteCodeBtn.disabled = false
+            })
+        })
+
         //speech-to-code
         let algoTextArea=document.getElementById('algoTextarea');
 let newAlgoBtn=document.getElementById('newAlgoBtn')
@@ -264,7 +297,7 @@ newAlgoBtn.addEventListener('click', ()=>{
         console.log('No speech was detected. Try again.');  
       };
     }
-    let newSubtitles=algoTextarea.value;
+    let newSubtitles=algoTextArea.value;
   
     recognition.onresult = function(event) {
       // console.log("results ");
@@ -297,8 +330,8 @@ newAlgoBtn.addEventListener('click', ()=>{
     
       // if(!mobileRepeatBug) {
         newSubtitles += transcript;
-        algoTextarea.value=newSubtitles;
-        updateScrollGeneral(algoTextarea);
+        algoTextArea.value=newSubtitles;
+        updateScrollGeneral(algoTextArea);
         // ASLsubtitlesDisplay.appendChild(aslSubtitles);
         // updateScrollGeneral(ASLsubtitlesDisplay);
       // }
@@ -309,10 +342,10 @@ newAlgoBtn.addEventListener('click', ()=>{
   newLineBtn.addEventListener('click', ()=>{
     // algoTextArea.value='hi\nStuti';
     
-      algoTextArea.value+='\n';
+      algoTextArea.value+='.\n';
     //   let text=algoTextArea.value+'\r\n';
     //   text.replace(/[\r\n]+/g, '\\\n')
-      algoTextArea.value+="\n";
+    //   algoTextArea.value+="\n";
     //   algoTextArea.value.replace(/\r?\n/g, '<br />');
   })
     </script>
