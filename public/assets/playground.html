@@ -56,6 +56,10 @@
         <div id="editor-algo-btn">
             <button id="algo-to-code">Write Code</button>
         </div>
+
+        <div id="editor-convert-btn">
+            <button id="code-to-code">Convert Code</button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.22.3/min/vs/loader.js"></script>
@@ -119,16 +123,16 @@
                 console.log(data)
                 const outputDiv = document.getElementById('output-area')
                 outputDiv.innerText = data.output
-            })
-                .catch(err => {
+            }).catch(err => {
                     console.log(err)
-                })
-                .finally(() => {
+            }).finally(() => {
                     languageBtn.disabled = false
-                })
+            })
         })
 
-        document.getElementById('algo-to-code').addEventListener('click', async (event) => {
+        const WriteCodeBtn = document.getElementById('algo-to-code')
+        WriteCodeBtn.addEventListener('click', async (event) => {
+            WriteCodeBtn.disabled = true
             const data = {
                 language: languageSelect.value,
                 code: editor.getValue()
@@ -141,6 +145,48 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
+            })
+
+            response.json().then(data => {
+                var selection = editor.getSelection();
+                var id = { major: 1, minor: 1 };             
+                var text = data.choices[0].text;
+                var op = {identifier: id, range: selection, text: text, forceMoveMarkers: true};
+                editor.executeEdits("my-source", [op]);
+            }).catch(err => {
+                console.log(err)
+            }).finally(() => {
+                WriteCodeBtn.disabled = false
+            })
+        })
+
+        const ConvertCodeBtn = document.getElementById('code-to-code')
+        ConvertCodeBtn.addEventListener('click', async (event) => {
+            ConvertCodeBtn.disabled = true
+            const data = {
+                language: languageSelect.value,
+                code: editor.getValue()
+            }
+
+            console.log(data)
+            const response = await fetch(`${BASE_URL}/code/convert`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+
+            response.json().then(data => {
+                var selection = editor.getSelection();
+                var id = { major: 1, minor: 1 };             
+                var text = data.choices[0].text;
+                var op = {identifier: id, range: selection, text: text, forceMoveMarkers: true};
+                editor.executeEdits("my-source", [op]);
+            }).catch(err => {
+                console.log(err)
+            }).finally(() => {
+                ConvertCodeBtn.disabled = false
             })
         })
     </script>
