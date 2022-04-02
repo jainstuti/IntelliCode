@@ -46,12 +46,15 @@
         <div id="editor-bottom-bar">
             <button id="btn-run">Run</button>
         </div>
+
+        <div id="editor-algo-btn">
+            <button id="algo-to-code">Write Code</button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.22.3/min/vs/loader.js"></script>
     <script>
         require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.22.3/min/vs' } });
-
         let editor;
 
         require(['vs/editor/editor.main'], function () {
@@ -94,8 +97,25 @@
                 language: languageSelect.value,
                 code: editor.getValue()
             }
+
             console.log(data)
             const response = await fetch(`${BASE_URL}/code/exec`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+        })
+
+        document.getElementById('algo-to-code').addEventListener('click', async (event) => {
+            const data = {
+                language: languageSelect.value,
+                code: editor.getValue()
+            }
+
+            console.log(data)
+            const response = await fetch(`${BASE_URL}/code/write`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

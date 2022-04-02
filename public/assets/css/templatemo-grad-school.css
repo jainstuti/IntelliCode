@@ -79,6 +79,11 @@ p {
     transform: translate(-50%);
 }
 
+
+#editor-algo-btn {
+  display: inline;
+}
+
 .section-heading h2 {
     margin-top: 100px;
     position: relative;
