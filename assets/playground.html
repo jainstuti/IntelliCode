@@ -1,148 +1,85 @@
 <!DOCTYPE html>
 <html lang="en" style="margin-left: -8px">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Playground</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/editor/editor.main.css" integrity="sha512-XjO5XYWl8u7tYF3CItEHgoWh8rtQmDeSzPJq4+4PIrbak7TiqeKbWv/4ZwHZ1HAf5dIWHXoguA/jobn2psKZ7w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"
+        integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
 
-        <!-- Additional CSS Files -->
-        <link rel="stylesheet" href="css/fontawesome.css">
-        <link rel="stylesheet" href="css/templatemo-grad-school.css">
-        <link rel="stylesheet" href="css/owl.css">
-        <link rel="stylesheet" href="css/lightbox.css">
-    </head>
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="css/fontawesome.css">
+    <link rel="stylesheet" href="css/templatemo-grad-school.css">
+    <link rel="stylesheet" href="css/owl.css">
+    <link rel="stylesheet" href="css/lightbox.css">
+</head>
+
 <body>
-    <script>var require = { paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs' } };</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js" integrity="sha512-gWqaPfGsZiCkYB6e5mNN4SMRpEvLGItLBqgOAoyLSKtDxWS2O1YPcOeGTy8d8l00gqc8rVue9ae/ncZqhmfj4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/editor/editor.main.nls.min.js" integrity="sha512-4XY3/LL6Plkq2tXMnatY+se07ZhwFMkZehD5Z68HrKoSL3BTyLDjwFomhUWixKu8VUw6jWe/8RXT1WtH95lLFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/editor/editor.main.min.js" integrity="sha512-CK3czr9gLG2z/ygdSM+gNenkN9AShfpW4gMjVyY06VgFHLoc4OCoO92Z8UkcBwVX0ufoYbJw3IVs1mHfXQeI3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-
-
-      <!--header-->
-        <header class="main-header clearfix" role="header">
-            <div class="logo">
+    <!--header-->
+    <header class="main-header clearfix" role="header">
+        <div class="logo">
             <a href="#"><em>Intelli</em>Code</a>
-            </div>
-            <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
-            <nav id="menu" class="main-nav" role="navigation">
+        </div>
+        <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
+        <nav id="menu" class="main-nav" role="navigation">
             <ul class="main-menu">
                 <li><a href="../index.html">Home</a></li>
                 <li><a href="playground.html">Playground</a></li>
             </ul>
-            </nav>
-        </header>
+        </nav>
+    </header>
 
     <h1 class="play-head">Playground</h1>
 
-    <pre id="CodeBlock">
-        using System;
-        namespace VSCodeEditor
-        {
-            class Program
-            {
-                static void Main(string[] args)
-                {
-                    Console.WriteLine("Hello World!");
-                }
-            }
-            class Program
-            {
-                static void Main(string[] args)
-                {
-                    Console.WriteLine("Hello World!");
-                }
-            }
-            class Program
-            {
-                static void Main(string[] args)
-                {
-                    Console.WriteLine("Hello World!");
-                }
-            }
-            class Program
-            {
-                static void Main(string[] args)
-                {
-                    Console.WriteLine("Hello World!");
-                }
-            }
+    <label for="language">Language: </label>
+    <select name="language" id="language-select">
+        <option value="python" selected>Python</option>
+        <option value="javascript">Javascript</option>
+        <!-- <option value="cpp">C++</option> -->
+    </select>
+    <div id="container" style="width:800px;height:580px;border:1px solid grey"></div>
 
-
-            class Program
-            {
-                static void Main(string[] args)
-                {
-                    Console.WriteLine("Hello World!");
-                }
-            }
-
-            class Program
-            {
-                static void Main(string[] args)
-                {
-                    Console.WriteLine("Hello World!");
-                }
-            }
-            class Program
-            {
-                static void Main(string[] args)
-                {
-                    Console.WriteLine("Hello World!");
-                }
-            }
-            class Program
-            {
-                static void Main(string[] args)
-                {
-                    Console.WriteLine("Hello World!");
-                }
-            }
-            class Program
-            {
-                static void Main(string[] args)
-                {
-                    Console.WriteLine("Hello World!");
-                }
-            }
-            class Program
-            {
-                static void Main(string[] args)
-                {
-                    Console.WriteLine("Hello World!");
-                }
-            }
-        }
-    </pre>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.22.3/min/vs/loader.js"></script>
     <script>
-        var codeContent = $.trim($('#CodeBlock').text());
-        $('#CodeBlock').html('');
+        require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.22.3/min/vs' } });
 
-        var editorCodeBlock = monaco.editor.create(document.getElementById('CodeBlock'), {
-            value: codeContent,
-            language: 'csharp',
-            theme: 'vs',
-            lineNumbers: 'on',
-            glyphMargin: false,
-            vertical: 'auto',
-            horizontal: 'auto',
-            verticleScrollbarSize: 10,
-            horizontalScrollbarSize: 10,
-            scrollBeyondLastLine: false,
-            readOnly: true,
-            automaticLayout: true,
-            minimap: {
-                enabled: false
-            },
-            lineHeight: 19,
+        let editor;
+
+        require(['vs/editor/editor.main'], function () {
+            editor = monaco.editor.create(document.getElementById('container'), {
+                language: 'python',
+                theme: 'vs-dark',
+                value: [
+                    '# Python program to find the factorial of a number provided by the user.',
+                    '\n',
+                    '# change the value for a different result',
+                    'num = 7',
+                    '\n',
+                    '# To take input from the user',
+                    '#num = int(input("Enter a number: "))',
+                    '\n',
+                    'factorial = 1',
+                    '\n',
+                    '# check if the number is negative, positive or zero',
+                    'if num < 0:',
+                    '\tprint("Sorry, factorial does not exist for negative numbers")',
+                    'elif num == 0:',
+                    '\tprint("The factorial of 0 is 1")',
+                    'else:',
+                    '\tfor i in range(1,num + 1):',
+                    '\t\tfactorial = factorial*i',
+                    '\t\tprint("The factorial of", num, "is", factorial)'
+                ].join('\n')
+            });
         });
-        $("#CodeBlock").height((editorCodeBlock.getModel().getLineCount()*19)+10);
+
+        document.getElementById('language-select').addEventListener('change', (event) => {
+            monaco.editor.setModelLanguage(editor.getModel(), event.target.value)
+            console.log(typeof event.target.value)
+        })
     </script>
 </body>
+
 </html>
