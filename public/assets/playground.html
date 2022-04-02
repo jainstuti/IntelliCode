@@ -39,7 +39,14 @@
         <option value="javascript">Javascript</option>
         <!-- <option value="cpp">C++</option> -->
     </select>
-    <div id="container" style="width:800px;height:580px;border:1px solid grey"></div>
+
+    <div class="editor-container">
+        <div id="container" style="width:800px;height:580px;border:1px solid grey"></div>
+
+        <div id="editor-bottom-bar">
+            <button id="btn-run">Run</button>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.22.3/min/vs/loader.js"></script>
     <script>
@@ -75,9 +82,26 @@
             });
         });
 
-        document.getElementById('language-select').addEventListener('change', (event) => {
+        const languageSelect = document.getElementById('language-select')
+        languageSelect.addEventListener('change', (event) => {
             monaco.editor.setModelLanguage(editor.getModel(), event.target.value)
-            console.log(typeof event.target.value)
+        })
+
+        const BASE_URL = 'http://localhost:3001'
+
+        document.getElementById('btn-run').addEventListener('click', async (event) => {
+            const data = {
+                language: languageSelect.value,
+                code: editor.getValue()
+            }
+            console.log(data)
+            const response = await fetch(`${BASE_URL}/code/exec`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
         })
     </script>
 </body>
