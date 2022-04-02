@@ -1,5 +1,17 @@
+.main-container {
+    margin-top: 95px !important;
+}
+
 .editor-container {
     max-width: 800px;
+    position: relative;
+}
+
+.editor-bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    width: 800px;
+    padding-top: 5px;
 }
 
 .output-container > h4 {
@@ -8,19 +20,16 @@
 
 .output-container {
     position: absolute;
-    bottom: 5%;
+    bottom: 0;
     height: 200px;
     width: 800px;
     background-color: black;
     color: white;
     font-family: 'Courier New', Courier, monospace;
+    overflow-y: scroll;
+    padding-left: 20px;
 }
-
-/* #speechToCode{
-    margin-left: 10px;
-} */
 
 .container{
     margin: 40px 0 10px 10px;
-    /* margin-top: 40px; */
 }
