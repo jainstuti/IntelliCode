@@ -12,8 +12,10 @@
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="css/fontawesome.css">
     <link rel="stylesheet" href="css/templatemo-grad-school.css">
+
     <link rel="stylesheet" href="css/owl.css">
     <link rel="stylesheet" href="css/lightbox.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="css/playground.css">
 </head>
 
@@ -33,8 +35,17 @@
     </header>
 
     <h1 class="play-head">Playground</h1>
-
-    <label for="language">Language: </label>
+    <div class="container">
+        <div class="row">
+          <div id="speechToCode" class="col-6">
+            <textarea id="algoTextarea" rows="10" cols="60" placeholder="Speak or click to write the algo"></textarea>
+            <br/>
+            <button id="newAlgoBtn">New Algo</button>
+            <button id="newLineBtn">New line</button>
+            <button>Convert to code</button>
+          </div>
+          <div class="col-6">
+            <label for="language">Language: </label>
     <select name="language" id="language-select">
         <option value="python" selected>Python</option>
         <option value="javascript">Javascript</option>
@@ -50,9 +61,33 @@
         </div>
 
         <div id="editor-bottom-bar">
-            <button id="btn-run">Run</button>
+            <button class="btn btn-primary" id="btn-run">Run</button>
         </div>
     </div>
+          </div>
+          
+        </div>
+      </div>
+    
+    <!-- <label for="language">Language: </label>
+    <select name="language" id="language-select">
+        <option value="python" selected>Python</option>
+        <option value="javascript">Javascript</option>
+        <!-- <option value="cpp">C++</option> -->
+    </select>
+
+    <!-- <div class="editor-container">
+        <div id="container" style="width:800px;height:580px;border:1px solid grey"></div>
+
+        <div class="output-container">
+            <h4>Output</h4>
+            <div id="output-area"></div>
+        </div>
+
+        <div id="editor-bottom-bar">
+            <button id="btn-run">Run</button>
+        </div>
+    </div> -->
 
     <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.22.3/min/vs/loader.js"></script>
     <script>
@@ -123,6 +158,97 @@
                     languageBtn.disabled = false
                 })
         })
+
+        //speech-to-code
+        let algoTextArea=document.getElementById('algoTextarea');
+let newAlgoBtn=document.getElementById('newAlgoBtn')
+let newLineBtn=document.getElementById('newLineBtn') ;
+
+
+function updateScrollGeneral(el){
+    // const el=document.getElementById(id) ;
+    el.scrollTop = el.scrollHeight;
+}
+  
+newAlgoBtn.addEventListener('click', ()=>{
+    try{
+      var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      var recognition = new SpeechRecognition();
+    }
+    catch(e) {
+      console.log(e);
+    }
+    // var speechRecognitionList = new SpeechGrammarList();
+    // recognition.grammars = speechRecognitionList;
+    recognition.continuous = true;
+    recognition.lang = 'en-US';
+    // recognition.interimResults = true;
+    recognition.maxAlternatives = 1;
+    recognition.start();
+    recognition.onstart = function() { 
+      console.log('Voice recognition activated. Try speaking into the microphone.');
+    }
+    
+    // recognition.onspeechend = function() {
+    //   instructions.text('You were quiet for a while so voice recognition turned itself off.');
+    // }
+    
+    recognition.onerror = function(event) {
+      if(event.error == 'no-speech') {
+        console.log('No speech was detected. Try again.');  
+      };
+    }
+    let newSubtitles=algoTextarea.value;
+  
+    recognition.onresult = function(event) {
+      // console.log("results ");
+      // console.log(event);
+      // event is a SpeechRecognitionEvent object.
+      // It holds all the lines we have captured so far. 
+      // We only need the current one.
+      let current = event.resultIndex;
+    
+      // Get a transcript of what was said.
+      let transcript = event.results[current][0].transcript;
+      // console.log(typeof transcript);
+    //   let aslSubtitles = document.createElement("div");
+    //   var Exp = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i;
+    //   for (let i = 0; i < transcript.length; i++) {
+    //     console.log("in for");
+    //     if(transcript[i].match(/^[0-9a-z]+$/)){
+    //       console.log("regex");
+    //       let aslChar = document.createElement("img");
+    //       aslChar.src="assets/images/ASL_letters/"+transcript[i].toLowerCase()+".jpg";
+    //       console.log(aslChar.src);
+    //       aslSubtitles.appendChild(aslChar);
+    //     }
+    //   }
+      
+      // Add the current transcript to the contents of our Note.
+      // There is a weird bug on mobile, where everything is repeated twice.
+      // There is no official solution so far so we have to handle an edge case.
+      // var mobileRepeatBug = (current == 1 && transcript == event.results[0][0].transcript);
+    
+      // if(!mobileRepeatBug) {
+        newSubtitles += transcript;
+        algoTextarea.value=newSubtitles;
+        updateScrollGeneral(algoTextarea);
+        // ASLsubtitlesDisplay.appendChild(aslSubtitles);
+        // updateScrollGeneral(ASLsubtitlesDisplay);
+      // }
+    };
+  
+  })
+
+  newLineBtn.addEventListener('click', ()=>{
+    // algoTextArea.value='hi\nStuti';
+    
+      algoTextArea.value+='\n';
+    //   let text=algoTextArea.value+'\r\n';
+    //   text.replace(/[\r\n]+/g, '\\\n')
+      algoTextArea.value+="\n";
+    //   algoTextArea.value.replace(/\r?\n/g, '<br />');
+  })
     </script>
 </body>
 
