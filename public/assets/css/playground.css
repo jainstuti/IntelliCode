@@ -1,0 +1,17 @@
+.editor-container {
+    max-width: 800px;
+}
+
+.output-container > h4 {
+    text-align: center;
+}
+
+.output-container {
+    position: absolute;
+    bottom: 0;
+    height: 200px;
+    width: 800px;
+    background-color: black;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+}

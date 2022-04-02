@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/templatemo-grad-school.css">
     <link rel="stylesheet" href="css/owl.css">
     <link rel="stylesheet" href="css/lightbox.css">
+    <link rel="stylesheet" href="css/playground.css">
 </head>
 
 <body>
@@ -42,6 +43,11 @@
 
     <div class="editor-container">
         <div id="container" style="width:800px;height:580px;border:1px solid grey"></div>
+
+        <div class="output-container">
+            <h4>Output</h4>
+            <div id="output-area"></div>
+        </div>
 
         <div id="editor-bottom-bar">
             <button id="btn-run">Run</button>
@@ -89,7 +95,9 @@
 
         const BASE_URL = 'http://localhost:3001'
 
-        document.getElementById('btn-run').addEventListener('click', async (event) => {
+        const languageBtn = document.getElementById('btn-run')
+        languageBtn.addEventListener('click', async (event) => {
+            languageBtn.disabled = true
             const data = {
                 language: languageSelect.value,
                 code: editor.getValue()
@@ -102,6 +110,18 @@
                 },
                 body: JSON.stringify(data)
             })
+
+            response.json().then(data => {
+                console.log(data)
+                const outputDiv = document.getElementById('output-area')
+                outputDiv.innerText = data.output
+            })
+                .catch(err => {
+                    console.log(err)
+                })
+                .finally(() => {
+                    languageBtn.disabled = false
+                })
         })
     </script>
 </body>
