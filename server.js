@@ -11,7 +11,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 
 const configuration = new Configuration({
-	apiKey: process.env.OPENAI_API,
+    apiKey: process.env.OPENAI_API,
 });
 
 const openai = new OpenAIApi(configuration);
@@ -46,6 +46,7 @@ app.post('/code/exec', (req, res) => {
             })
 
             python.on('exit', () => {
+                console.log(output)
                 res.status(200).json({ output })
             })
 
@@ -60,39 +61,39 @@ app.post('/code/exec', (req, res) => {
 
 app.post('/code/write', async (req, res) => {
     const text = req.body.code
-    const outputCode =  await openai.createCompletion("text-davinci-001", {
+    const outputCode = await openai.createCompletion("text-davinci-001", {
         prompt: `Write code by following these instructions:\n${text}`,
         max_tokens: 500,
         temperature: 0.5,
     }).then(response => {
         if (!response) throw Error;
-        
+
         console.log("Wrote: ", response.data.choices[0].text)
         res.status(200)
         res.send(response.data)
     })
-    .then(undefined, err => {
-        console.error('I am error', err);
-    });
-    
+        .then(undefined, err => {
+            console.error('I am error', err);
+        });
+
 })
 
 app.post('/code/convert', async (req, res) => {
     const text = req.body.code
-    const outputCode =  await openai.createCompletion("text-davinci-001", {
+    const outputCode = await openai.createCompletion("text-davinci-001", {
         prompt: `Convert this piece of code from ${text}`,
         max_tokens: 500,
         temperature: 0.5,
     }).then(response => {
         if (!response) throw Error;
-        
+
         console.log("Converted: ", response.data.choices[0].text)
         res.status(200)
         res.send(response.data)
     })
-    .then(undefined, err => {
-        console.error('I am error', err);
-    });
+        .then(undefined, err => {
+            console.error('I am error', err);
+        });
 })
 
 
