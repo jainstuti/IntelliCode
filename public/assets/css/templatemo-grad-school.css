@@ -86,6 +86,8 @@ p {
 
 .output-container {
   margin-bottom: 60px;
+  overflow-y: scroll;
+  padding-left: 20px;
 }
 
 .section-heading h2 {
